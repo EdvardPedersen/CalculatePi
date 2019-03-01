@@ -16,8 +16,9 @@ def calculate_pi(iterations):
             points_outside += 1
         else:
             points_inside += 1
-    return 4*points_inside / (points_outside + points_inside)
-
+    total_points = points_outside + points_inside
+    estimated_pi = 4 * points_inside / total_points
+    return estimated_pi
 
 # Pygame setup
 pygame.init()
@@ -57,7 +58,7 @@ while True:
     accumulated_error += current_error
     if current_iterations % 100 == 0:
         time_passed = clock() - time_iteration
-        output = "At iteration {}, average error is {}, done in {} seconds"
-        print(output.format(current_iterations, accumulated_error/100, time_passed))
+        output = "At iteration {:>6}, average error is {:<8.5}, done in {:<4.2} seconds ({} FPS)"
+        print(output.format(current_iterations, accumulated_error/100, time_passed, int(100/time_passed)))
         accumulated_error = 0
         time_iteration = clock()
