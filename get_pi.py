@@ -134,12 +134,13 @@ class PiEstimation:
         DO NOT MODIFY
         """
         time_passed = clock() - self._time_iteration
-        output = "At iteration {:>6}, average error is {:<8.5}, " \
+        output = "At iteration {:>6}, pi is {:>6.5}, average error is {:<8.5}, " \
                  "done in {:<4.2} seconds ({} iterations per second)"
         print(output.format(self.current_iterations,
-                            self._accumulated_error/100,
+                            self.current_pi,
+                            self._accumulated_error/self.print_interval,
                             time_passed,
-                            int(100/time_passed)))
+                            int(self.print_interval/time_passed)))
         self._accumulated_error = 0
         self._time_iteration = clock()
 
