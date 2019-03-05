@@ -13,7 +13,28 @@ from time import clock
 import pygame
 
 
+class Estimatepi:
 
+    points_inside_circle = 0
+    iterations = 0
+
+    def __iter__(self):
+        self.estimated_pi = 0
+        return self
+
+    def __next__(self):
+
+        self.iterations += 1
+
+        x_position = random() - 0.5
+        y_position = random() - 0.5
+
+        if sqrt(x_position**2 + y_position**2) <= 0.5:
+            self.points_inside_circle += 1
+
+        self.estimated_pi = 4 * self.points_inside_circle / self.iterations
+
+        return self.estimated_pi
 
 def calculate_pi(iterations):
     """
@@ -39,7 +60,6 @@ def calculate_pi(iterations):
             points_inside_circle += 1
     estimated_pi = 4 * points_inside_circle / iterations
     return estimated_pi
-
 
 
 class PiEstimation:
@@ -77,6 +97,8 @@ class PiEstimation:
         Continously calculates a more correct value for pi
         and draws this on screen, loops forever.
         """
+
+
         # TODO: Change to use an iterator?
         while True:
             self.current_pi = calculate_pi(self.current_iterations)
