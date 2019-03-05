@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 """
 This application calculates pi using a monte carlo method,
 and visualizes the results compared to the constant in the
@@ -12,8 +14,7 @@ from time import clock
 
 import pygame
 
-
-def calculate_pi(iterations):
+def calculate_pi():
     """
     Calculates pi using a monte carlo method, returns pi
 
@@ -28,15 +29,17 @@ def calculate_pi(iterations):
     """
     # TODO: Replace with an iterator?
     points_inside_circle = 0
-    for _ in range(iterations):
+    iterations = 0
+    while True:
+        iterations += 1
         # Generate a random point between (-0.5, -0.5) and (0.5, 0.5)
         x_position = random() - 0.5
         y_position = random() - 0.5
         # Check if point is inside the circle
         if sqrt(x_position**2 + y_position**2) <= 0.5:
             points_inside_circle += 1
-    estimated_pi = 4 * points_inside_circle / iterations
-    return estimated_pi
+        estimated_pi = 4 * points_inside_circle / iterations
+        yield estimated_pi
 
 
 
@@ -76,8 +79,9 @@ class PiEstimation:
         and draws this on screen, loops forever.
         """
         # TODO: Change to use an iterator?
+        g = calculate_pi()
         while True:
-            self.current_pi = calculate_pi(self.current_iterations)
+            self.current_pi = next(g)
             self.current_iterations += 1
             self._visualize_results()
 
