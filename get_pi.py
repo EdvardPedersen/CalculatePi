@@ -124,6 +124,7 @@ class PiEstimation:
             if event.type == pygame.QUIT:
                 final_str = "Final value for pi: {}"
                 print(final_str.format(self.current_pi))
+                print('But the real value is 3.14159265358979323846264338327950288419716939937510')
                 pygame.quit()
                 exit()
 
