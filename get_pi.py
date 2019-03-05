@@ -28,15 +28,15 @@ def calculate_pi(iterations):
     """
     # TODO: Replace with an iterator?
     points_inside_circle = 0
-    for _ in range(iterations):
+    for i in range(iterations):
         # Generate a random point between (-0.5, -0.5) and (0.5, 0.5)
         x_position = random() - 0.5
         y_position = random() - 0.5
         # Check if point is inside the circle
         if sqrt(x_position**2 + y_position**2) <= 0.5:
             points_inside_circle += 1
-    estimated_pi = 4 * points_inside_circle / iterations
-    return estimated_pi
+            estimated_pi = 4 * points_inside_circle / i
+            yield estimated_pi
 
 
 
@@ -76,8 +76,14 @@ class PiEstimation:
         and draws this on screen, loops forever.
         """
         # TODO: Change to use an iterator?
-        while True:
-            self.current_pi = calculate_pi(self.current_iterations)
+        a = calculate_pi(self.current_iterations)
+        b = 0
+        for x, y in enumerate(a):
+            b += x
+        b = b/y
+
+            
+            self.current_pi = b
             self.current_iterations += 1
             self._visualize_results()
 
