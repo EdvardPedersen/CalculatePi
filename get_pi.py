@@ -13,6 +13,8 @@ from time import clock
 import pygame
 
 
+
+
 def calculate_pi(iterations):
     """
     Calculates pi using a monte carlo method, returns pi
