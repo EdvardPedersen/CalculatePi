@@ -38,10 +38,7 @@ def calculate_pi():
         # Check if point is inside the circle
         if sqrt(x_position**2 + y_position**2) <= 0.5:
             points_inside_circle += 1
-        estimated_pi = 4 * points_inside_circle / iterations
-        yield estimated_pi
-
-
+        yield 4 * points_inside_circle / iterations
 
 class PiEstimation:
     """
