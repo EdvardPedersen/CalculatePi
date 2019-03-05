@@ -13,6 +13,18 @@ from time import clock
 import pygame
 
 
+def generate_point():
+    while True:
+        # Generate a random point between (-0.5, -0.5) and (0.5, 0.5)
+        x_position = random() - 0.5
+        y_position = random() - 0.5
+        # Check if point is inside the circle
+        if sqrt(x_position**2 + y_position**2) <= 0.5:
+            yield 1
+        else:
+            yield 0
+
+
 def calculate_pi(iterations):
     """
     Calculates pi using a monte carlo method, returns pi
@@ -27,17 +39,13 @@ def calculate_pi(iterations):
     iterations -- the number of random points generated
     """
     # TODO: Replace with an iterator?
-    points_inside_circle = 0
-    for _ in range(iterations):
-        # Generate a random point between (-0.5, -0.5) and (0.5, 0.5)
-        x_position = random() - 0.5
-        y_position = random() - 0.5
-        # Check if point is inside the circle
-        if sqrt(x_position**2 + y_position**2) <= 0.5:
-            points_inside_circle += 1
-    estimated_pi = 4 * points_inside_circle / iterations
-    return estimated_pi
-
+    point_generator = generate_point()
+    while True:
+        points_inside_circle = 0
+        for _ in range(iterations):
+            points_inside_circle += next(point_generator)
+        yield 4 * points_inside_circle / iterations
+        iterations += 1
 
 
 class PiEstimation:
@@ -68,7 +76,7 @@ class PiEstimation:
         # Calculated pi for the current number of iterations
         self.current_iterations = 100
         self.current_pi = 0
-
+        self.pi_generator = calculate_pi(self.current_iterations)
 
     def mainloop(self):
         """
@@ -77,10 +85,9 @@ class PiEstimation:
         """
         # TODO: Change to use an iterator?
         while True:
-            self.current_pi = calculate_pi(self.current_iterations)
+            self.current_pi = next(self.pi_generator)
             self.current_iterations += 1
             self._visualize_results()
-
 
     def _visualize_results(self):
         """
