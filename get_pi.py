@@ -77,7 +77,7 @@ class PiEstimation:
         and draws this on screen, loops forever.
         """
         # TODO: Change to use an iterator?
-        g = calculate_pi(10000)
+        g = calculate_pi(1000)
         while True:
             self.current_pi = next(g)
             self.current_iterations += 1
