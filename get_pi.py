@@ -27,8 +27,11 @@ def calculate_pi(iterations):
     iterations -- the number of random points generated
     """
     # TODO: Replace with an iterator?
+    r = range(iterations)
+    it = r.__iter__()
+
     points_inside_circle = 0
-    for _ in range(iterations):
+    while(next(it) < iterations-1):
         # Generate a random point between (-0.5, -0.5) and (0.5, 0.5)
         x_position = random() - 0.5
         y_position = random() - 0.5
